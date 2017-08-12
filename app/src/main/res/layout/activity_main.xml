@@ -4,15 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.github.ck7179.runpather.MainActivity">
+    tools:context="io.github.ck7179.runpather.MainActivity"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textview_welcomeRunpather"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="200dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/welcomeRunpather"
+        android:textColor="@android:color/black"
+        android:textSize="60sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/button_FacebookLogin"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorFacebookBlue"
+        android:gravity="center"
+        android:text="@string/FacebookLogin"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textview_welcomeRunpather"
+        app:layout_constraintVertical_bias="0.397" />
+
+    <Button
+        android:id="@+id/button_GoogleLogin"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorGoogleRed"
+        android:gravity="center"
+        android:text="@string/GoogleLogin"
+        android:textColor="@color/colorWhite"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@+id/button_FacebookLogin"
+        app:layout_constraintRight_toRightOf="@+id/button_FacebookLogin"
+        app:layout_constraintTop_toBottomOf="@+id/textview_welcomeRunpather"
+        app:layout_constraintVertical_bias="0.736" />
 </android.support.constraint.ConstraintLayout>
