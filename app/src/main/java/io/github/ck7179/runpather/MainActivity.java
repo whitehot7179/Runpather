@@ -69,8 +69,10 @@ public class MainActivity extends AppCompatActivity
         img = (ImageView) findViewById(R.id.imageView);
     }
 
+    //返回鍵監聽
     @Override
     public void onBackPressed() {
+        //設定當drawer打開時的返回鍵按下的處裡
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    //toolbar上的選單(settings)建立
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    //選單內的item點擊事件監聽
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -103,6 +107,7 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    //drawer內item的事件監聽
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -114,9 +119,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.menu_route_share) {
 
         } else if (id == R.id.menu_voice_setting) {
-            return false;
+            return false;//取消點擊
         } else if (id == R.id.menu_screen_setting) {
-            return false;
+            return false;//取消點擊
         } else if (id == R.id.menu_account_signout) {
 
         }
