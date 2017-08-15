@@ -1,6 +1,24 @@
 <resources>
     <string name="app_name">Runpather</string>
-    <string name="welcomeRunpather">Runpather</string>
+    <string name="JoinUs">Join Us!</string>
+    <string name="JoinUs_Info">現在即刻加入我們</string>
     <string name="GoogleLogin">Google Login</string>
     <string name="FacebookLogin">Facebook Login</string>
+    <string name="profile_name_default">你的名字</string>
+    <string name="profile_email_default">yourname@gmail.com</string>
+    <string name="menu_route_fav">路線珍藏</string>
+    <string name="menu_route_share">路線分享</string>
+    <string name="menu_setting">設定</string>
+    <string name="menu_voice_setting">語音設定</string>
+    <string name="menu_screen_setting">螢幕恆亮</string>
+    <string name="menu_account">帳戶</string>
+    <string name="menu_account_signout">帳戶登出</string>
+    <string name="setting_about">關於</string>
+    <string name="setting_contact">聯絡我們</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

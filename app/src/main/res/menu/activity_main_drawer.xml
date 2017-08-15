@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_route_fav"
+            android:icon="@drawable/ic_menu_favorite"
+            android:title="@string/menu_route_fav" />
+        <item
+            android:id="@+id/menu_route_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/menu_route_share" />
+    </group>
+
+    <item android:title="@string/menu_setting">
+        <menu>
+            <item
+                android:id="@+id/menu_voice_setting"
+                android:icon="@drawable/ic_menu_volume"
+                android:title="@string/menu_voice_setting" />
+            <item
+                android:id="@+id/menu_screen_setting"
+                android:icon="@drawable/ic_menu_lightbulb"
+                android:title="@string/menu_screen_setting" />
+        </menu>
+    </item>
+
+    <item android:title="@string/menu_account">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_account_signout"
+                    android:icon="@drawable/ic_menu_exit"
+                    android:title="@string/menu_account_signout" />
+            </group>
+        </menu>
+    </item>
+
+</menu>
