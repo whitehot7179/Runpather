@@ -1,11 +1,17 @@
 package io.github.ck7179.runpather;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +21,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -25,6 +33,16 @@ public class MainActivity extends AppCompatActivity
     private ImageView img;
     private DrawerLayout drawer;
     private NavigationView navigationView;
+    private TextView toolbar_title;
+    //抓取view函式
+    private void findViews() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        img = (ImageView) findViewById(R.id.imageView);
+        toolbar_title =(TextView) findViewById(R.id.toolbar_title);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,28 +74,79 @@ public class MainActivity extends AppCompatActivity
         //菜單內容監聽
         navigationView.setNavigationItemSelectedListener(this);
 
-        //圖片
+        //tabbed宣告
+        ViewPager vp_pages= (ViewPager) findViewById(R.id.vp_pages);
+        FragmentAdapter pagerAdapter=new FragmentAdapter(getSupportFragmentManager());
+        vp_pages.setAdapter(pagerAdapter);
+        TabLayout tbl_pages= (TabLayout) findViewById(R.id.tbl_pages);
+        tbl_pages.setupWithViewPager(vp_pages);
+        tab_setting(tbl_pages);
 
     }
 
-    //抓取view函式
-    private void findViews() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        img = (ImageView) findViewById(R.id.imageView);
+    //tab切換設定
+    public void tab_setting(TabLayout tbl_pages){
+        //view的宣告，每個view對應到各自的drawable，也就是圖示
+        final View view1 = getLayoutInflater().inflate(R.layout.custom_tab, null);
+        view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_person_white);
+        final View view2 = getLayoutInflater().inflate(R.layout.custom_tab, null);
+        view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_location);
+        final View view3 = getLayoutInflater().inflate(R.layout.custom_tab, null);
+        view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_public);
+
+        //設定每個tab的view
+        tbl_pages.getTabAt(0).setCustomView(view1);
+        tbl_pages.getTabAt(1).setCustomView(view2);
+        tbl_pages.getTabAt(2).setCustomView(view3);
+
+        //針對tab的切換做監聽
+        tbl_pages.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            //當tab被selected時的處理
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if(tab.getCustomView() == view1){
+                    view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_person_white);
+                    toolbar_title_setting(1);
+                }else if(tab.getCustomView() == view2){
+                    view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_location_white);
+                    toolbar_title_setting(2);
+                }else if(tab.getCustomView() == view3){
+                    view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_public_white);
+                    toolbar_title_setting(3);
+                }
+            }
+            //當tab沒被selected時的處理
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if(tab.getCustomView() == view1){
+                    view1.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_person);
+                }else if(tab.getCustomView() == view2){
+                    view2.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_location);
+                }else if(tab.getCustomView() == view3){
+                    view3.findViewById(R.id.icon).setBackgroundResource(R.drawable.ic_public);
+                }
+            }
+            //當tab再次被selected時的處理
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                onTabSelected(tab);
+            }
+        });
     }
 
-    //返回鍵監聽
-    @Override
-    public void onBackPressed() {
-        //設定當drawer打開時的返回鍵按下的處裡
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+    //設定toolbar上的顯示字
+    public void toolbar_title_setting(int a){
+        //由第幾個tab來判定顯示什麼字
+        switch(a){
+            case 1:
+                toolbar_title.setText(getString(R.string.tab_overall));
+                break;
+            case 2:
+                toolbar_title.setText(getString(R.string.tab_location));
+                break;
+            case 3:
+                toolbar_title.setText(getString(R.string.tab_public));
+                break;
         }
     }
 
@@ -131,9 +200,107 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    //fragment設定
+    public static class PlaceholderFragment extends Fragment {
+        //The fragment argument representing the section number for this fragment.
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        public PlaceholderFragment() {
+        }
+
+        //Returns a new instance of this fragment for the given section number.
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView ;
+            //宣告每個view對應到的fragment.xml
+            switch(getArguments().getInt(ARG_SECTION_NUMBER)){
+                case 1:
+                    rootView = inflater.inflate(R.layout.fragment_main_overall, container, false);
+                    setFrag_overall(rootView);
+                    return rootView;
+                case 2:
+                    rootView = inflater.inflate(R.layout.fragment_main_location, container, false);
+                    setFrag_location(rootView);
+                    return rootView;
+                case 3:
+                    rootView = inflater.inflate(R.layout.fragment_main_flag, container, false);
+                    setFrag_flag(rootView);
+                    return rootView;
+                default:
+                    rootView = inflater.inflate(R.layout.fragment_main_overall, container, false);
+                    setFrag_overall(rootView);
+                    return rootView;
+            }
+        }
+    }
+
+    //tab及fragmnt的對應設定
+    class FragmentAdapter extends FragmentPagerAdapter {
+
+        public FragmentAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return PlaceholderFragment.newInstance(position + 1);
+        }
+
+        @Override
+        public int getCount() {
+            return 3;
+        }
+
+        Drawable myDrawable;
+        String title;
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return null;
+        }
+    }
+
+    //第1頁fragment內容設定
+    public static void setFrag_overall(View rootView){
+        TextView tx = (TextView)rootView.findViewById(R.id.section_label);
+        tx.setText("12345888");
+    }
+
+    //第2頁fragment內容設定
+    public static void setFrag_location(View rootView){
+        TextView tx = (TextView)rootView.findViewById(R.id.section_label);
+        tx.setText("aaaaaaaaaa");
+    }
+
+    //第3頁fragment內容設定
+    public static void setFrag_flag(View rootView){
+        TextView tx = (TextView)rootView.findViewById(R.id.section_label);
+        tx.setText("hghghghghghghghghgh");
+    }
+
     //intent 設定往下一頁
     public void nextpage(){
         Intent intent = new Intent(this,SignInActivity.class);
         startActivity(intent);
+    }
+
+    //返回鍵監聽
+    @Override
+    public void onBackPressed() {
+        //設定當drawer打開時的返回鍵按下的處裡
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 }

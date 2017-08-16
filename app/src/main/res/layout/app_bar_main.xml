@@ -9,6 +9,7 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/appbar_padding_top"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -16,14 +17,37 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/AppTheme.PopupOverlay" >
 
-        </android.support.v7.widget.Toolbar>
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|start"
+                android:text="@string/tab_overall"
+                android:textColor="@color/colorWhite"
+                android:textSize="24sp" />
 
+         </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+                android:background="@color/colorPrimary"
+                app:tabSelectedTextColor="#ffffff"
+                app:tabIndicatorColor="#FFFFFF"
+                app:tabTextColor="#FFFFFF"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:id="@+id/tbl_pages"/>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_pages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -32,9 +56,11 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@color/colorYellow"
-        app:elevation="2dp"
+        app:elevation="5dp"
         app:fabSize="normal"
         android:scaleType="center"
         app:srcCompat="@drawable/ic_directions_run" />
+
+
 
 </android.support.design.widget.CoordinatorLayout>

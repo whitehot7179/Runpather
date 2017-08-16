@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group android:checkableBehavior="single">
         <item
@@ -17,11 +18,13 @@
             <item
                 android:id="@+id/menu_voice_setting"
                 android:icon="@drawable/ic_menu_volume"
-                android:title="@string/menu_voice_setting" />
+                android:title="@string/menu_voice_setting"
+                app:actionLayout="@layout/menu_switch"/>
             <item
                 android:id="@+id/menu_screen_setting"
                 android:icon="@drawable/ic_menu_lightbulb"
-                android:title="@string/menu_screen_setting" />
+                android:title="@string/menu_screen_setting"
+                app:actionLayout="@layout/menu_switch"/>
         </menu>
     </item>
 
