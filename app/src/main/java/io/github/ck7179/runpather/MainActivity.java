@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
-    private FloatingActionButton fab;
+    private static FloatingActionButton fab;
     private ImageView img;
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -58,8 +56,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 //設定按下按鈕後出現底部的提示訊息
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //       .setAction("Action", null).show();
                 //設定intent nextpage()
                 nextpage();
             }
@@ -82,6 +80,38 @@ public class MainActivity extends AppCompatActivity
         tbl_pages.setupWithViewPager(vp_pages);
         tab_setting(tbl_pages);
 
+        //設定viewpager與fab關聯
+        viewpager_change_fab(vp_pages);
+
+
+    }
+
+    //切換viewpager時隱藏fab與顯示fab
+    public void viewpager_change_fab(ViewPager v){
+        v.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                switch (position+1) {
+                    case 1:
+                        fab.show();
+                        break;
+                    case 2:
+                        fab.hide();
+                        break;
+                    case 3:
+                        fab.hide();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     //tab切換設定
@@ -221,6 +251,7 @@ public class MainActivity extends AppCompatActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView ;
+
             //宣告每個view對應到的fragment.xml
             switch(getArguments().getInt(ARG_SECTION_NUMBER)){
                 case 1:
@@ -232,7 +263,7 @@ public class MainActivity extends AppCompatActivity
                     setFrag_location(rootView);
                     return rootView;
                 case 3:
-                    rootView = inflater.inflate(R.layout.fragment_main_flag, container, false);
+                    rootView = inflater.inflate(R.layout.fragment_main_public, container, false);
                     setFrag_flag(rootView);
                     return rootView;
                 default:
@@ -271,25 +302,27 @@ public class MainActivity extends AppCompatActivity
     //第1頁fragment內容設定
     public static void setFrag_overall(View rootView){
         TextView tx = (TextView)rootView.findViewById(R.id.section_label);
-        tx.setText("12345888");
+        tx.setText(R.string.large_text);
     }
 
     //第2頁fragment內容設定
     public static void setFrag_location(View rootView){
         TextView tx = (TextView)rootView.findViewById(R.id.section_label);
-        tx.setText("aaaaaaaaaa");
+        tx.setText(R.string.large_text);
     }
 
     //第3頁fragment內容設定
     public static void setFrag_flag(View rootView){
         TextView tx = (TextView)rootView.findViewById(R.id.section_label);
-        tx.setText("hghghghghghghghghgh");
+        tx.setText(R.string.large_text);
     }
 
     //intent 設定往下一頁
     public void nextpage(){
-        Intent intent = new Intent(this,SignInActivity.class);
+        Intent intent = new Intent(this,RunEnvirActivity.class);
         startActivity(intent);
+        //設定activity頁面跳轉動畫(新頁面,現有頁面)
+        overridePendingTransition(R.transition.slide_from_right, R.transition.slide_none);
     }
 
     //返回鍵監聽

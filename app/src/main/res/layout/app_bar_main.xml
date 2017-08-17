@@ -59,7 +59,8 @@
         app:elevation="5dp"
         app:fabSize="normal"
         android:scaleType="center"
-        app:srcCompat="@drawable/ic_directions_run" />
+        app:srcCompat="@drawable/ic_directions_run"
+        />
 
 
 

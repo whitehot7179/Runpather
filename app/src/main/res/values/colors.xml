@@ -5,6 +5,8 @@
     <color name="colorAccent">#fb705e</color>
     <color name="colorProfileBlue">#005662</color>
     <color name="colorBase">#fafafa</color>
+    <color name="colorborder">#2e000000</color>
+    <color name="colorNoColor">#00ffffff</color>
     <color name="colorBlack">#404040</color>
     <color name="colorGray">#777777</color>
     <color name="colorWhite">#ffffff</color>
