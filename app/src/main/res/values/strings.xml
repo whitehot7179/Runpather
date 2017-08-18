@@ -19,7 +19,7 @@
     <string name="tab_location">附近總覽</string>
     <string name="tab_public">各地總覽</string>
     <string name="envir_info">環境資訊</string>
-
+    <string name="miles_setting">輸入里程數</string>
     <string name="nextStep">下一步</string>
     <string name="title_activity_main">MainActivity</string>
 

@@ -23,7 +23,12 @@
         <activity
             android:name=".RunEnvirActivity"
             android:label=""
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RunMileActivity"
+            android:label=""
+            android:theme="@style/AppTheme"
+            />
     </application>
 
 </manifest>
