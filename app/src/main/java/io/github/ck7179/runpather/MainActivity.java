@@ -1,27 +1,35 @@
 package io.github.ck7179.runpather;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,6 +40,7 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private TextView toolbar_title;
+    static Activity thisActivity = null;
     //抓取view函式
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -46,6 +55,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        thisActivity = this;
         findViews();//抓取view
 
         //設定以toolbar支援actionbar
@@ -76,6 +86,7 @@ public class MainActivity extends AppCompatActivity
         ViewPager vp_pages= (ViewPager) findViewById(R.id.vp_pages);
         FragmentAdapter pagerAdapter=new FragmentAdapter(getSupportFragmentManager());
         vp_pages.setAdapter(pagerAdapter);
+        vp_pages.setOffscreenPageLimit(2);
         TabLayout tbl_pages= (TabLayout) findViewById(R.id.tbl_pages);
         tbl_pages.setupWithViewPager(vp_pages);
         tab_setting(tbl_pages);
@@ -251,7 +262,6 @@ public class MainActivity extends AppCompatActivity
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView ;
-
             //宣告每個view對應到的fragment.xml
             switch(getArguments().getInt(ARG_SECTION_NUMBER)){
                 case 1:
@@ -264,7 +274,7 @@ public class MainActivity extends AppCompatActivity
                     return rootView;
                 case 3:
                     rootView = inflater.inflate(R.layout.fragment_main_public, container, false);
-                    setFrag_flag(rootView);
+                    setFrag_public(rootView);
                     return rootView;
                 default:
                     rootView = inflater.inflate(R.layout.fragment_main_overall, container, false);
@@ -291,8 +301,6 @@ public class MainActivity extends AppCompatActivity
             return 3;
         }
 
-        Drawable myDrawable;
-        String title;
         @Override
         public CharSequence getPageTitle(int position) {
             return null;
@@ -306,15 +314,87 @@ public class MainActivity extends AppCompatActivity
     }
 
     //第2頁fragment內容設定
-    public static void setFrag_location(View rootView){
-        TextView tx = (TextView)rootView.findViewById(R.id.section_label);
-        tx.setText(R.string.large_text);
+    public static void setFrag_location(final View rootView){
+        final WebView webview_location = (WebView)rootView.findViewById(R.id.webview_location);
+        WebviewSetting(webview_location,"setFrag_location");
+
+        //向下滑使頁面重新整理
+        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                webview_location.reload();//webview重新整理
+                //確認webview是否已載入
+                webview_location.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        mSwipeRefreshLayout.setRefreshing(false);//一旦重新整理即停止refreshing
+                        //toast顯示
+                        Toast.makeText(thisActivity, R.string.page_reload_finish, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 
     //第3頁fragment內容設定
-    public static void setFrag_flag(View rootView){
-        TextView tx = (TextView)rootView.findViewById(R.id.section_label);
-        tx.setText(R.string.large_text);
+    public static void setFrag_public(View rootView){
+        final WebView webview_public = (WebView)rootView.findViewById(R.id.webview_public);
+        WebviewSetting(webview_public,"setFrag_public");
+
+        //向下滑使頁面重新整理
+        final SwipeRefreshLayout mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                webview_public.reload();//webview重新整理
+                //確認webview是否已載入
+                webview_public.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public void onPageFinished(WebView view, String url) {
+                        mSwipeRefreshLayout.setRefreshing(false);//一旦重新整理即停止refreshing
+                        //toast顯示
+                        Toast.makeText(thisActivity, R.string.page_reload_finish, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
+    //設定WebView
+    private static void WebviewSetting(WebView webview,String setFrag){
+        webview.setBackgroundColor(Color.WHITE);
+        webview.setWebViewClient(new MyWebViewClient());
+        webview.getSettings().setJavaScriptEnabled(true);
+        webview.getSettings().setAppCacheEnabled(true);
+        webview.getSettings().setDomStorageEnabled(true);
+        webview.getSettings().setDatabaseEnabled(true);
+        switch(setFrag){
+            case "setFrag_location":
+                webview.loadUrl("https://ck7179.github.io/Web-Design/HW_4");
+                break;
+            case "setFrag_public":
+                webview.loadUrl("https://hypixel.net");
+                break;
+            default:
+                webview.loadUrl("https://www.google.com.tw");
+                break;
+        }
+    }
+
+    //webview的詳細設定
+    private static class MyWebViewClient extends WebViewClient {
+        //強制不跳出網頁瀏覽器顯示網頁，在app裡顯示
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return super.shouldOverrideUrlLoading(view, url);
+        }
+        @Override
+        public void onPageStarted(WebView w, String url, Bitmap f){
+        }
+        @Override
+        public void onPageFinished(WebView w,String url){
+        }
     }
 
     //intent 設定往下一頁
