@@ -1,6 +1,8 @@
 package io.github.ck7179.runpather;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -10,6 +12,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
@@ -17,13 +20,17 @@ import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class RunEnvirActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private Button button_next;
     private FloatingActionButton fab;
+    Activity thisActivity = null;
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -34,10 +41,12 @@ public class RunEnvirActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_run_envir);
+        thisActivity = this;
         findViews();
         set_toolbar();;
         set_fabClick();
         setNextButton();
+        setWebView();
     }
 
     //設定toolbar
@@ -74,6 +83,33 @@ public class RunEnvirActivity extends AppCompatActivity {
                 nextpage();
             }
         });
+    }
+
+    //設定webview
+    public void setWebView(){
+        final WebView webview_run_envir = (WebView)findViewById(R.id.webview_run_envir);
+        webview_run_envir.setBackgroundColor(Color.WHITE);
+        webview_run_envir.setWebViewClient(new MyWebViewClient());
+        webview_run_envir.getSettings().setJavaScriptEnabled(true);
+        webview_run_envir.getSettings().setAppCacheEnabled(true);
+        webview_run_envir.getSettings().setDomStorageEnabled(true);
+        webview_run_envir.getSettings().setDatabaseEnabled(true);
+        webview_run_envir.loadUrl("https://ck7179.github.io/Web-Design/HW_4");
+    }
+
+    //webview的詳細設定
+    private static class MyWebViewClient extends WebViewClient {
+        //強制不跳出網頁瀏覽器顯示網頁，在app裡顯示
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            return super.shouldOverrideUrlLoading(view, url);
+        }
+        @Override
+        public void onPageStarted(WebView w, String url, Bitmap f){
+        }
+        @Override
+        public void onPageFinished(WebView w,String url){
+        }
     }
 
     //上一頁intent
