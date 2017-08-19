@@ -55,6 +55,7 @@ public class RunEnvirActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_clear);
         //設定返回鍵按下的處裡
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +95,7 @@ public class RunEnvirActivity extends AppCompatActivity {
         webview_run_envir.getSettings().setAppCacheEnabled(true);
         webview_run_envir.getSettings().setDomStorageEnabled(true);
         webview_run_envir.getSettings().setDatabaseEnabled(true);
-        webview_run_envir.loadUrl("https://ck7179.github.io/Web-Design/HW_4");
+        //webview_run_envir.loadUrl("https://ck7179.github.io/Web-Design/HW_4");
     }
 
     //webview的詳細設定

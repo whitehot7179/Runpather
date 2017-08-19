@@ -1,21 +1,27 @@
 package io.github.ck7179.runpather;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 public class RunMileActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private Button button_next;
+    private AppBarLayout app_bar;
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         button_next = (Button) findViewById(R.id.button_next);
+        app_bar = (AppBarLayout) findViewById(R.id.app_bar);
     }
 
     @Override
@@ -25,6 +31,7 @@ public class RunMileActivity extends AppCompatActivity {
         findViews();
         set_toolbar();;
         setNextButton();
+        //setAppBarHeight();
     }
 
     //設定toolbar
@@ -49,6 +56,18 @@ public class RunMileActivity extends AppCompatActivity {
                 nextpage();
             }
         });
+    }
+
+    public void setAppBarHeight(){
+        Resources resources = this.getResources();
+        int resourceId = resources.getIdentifier("status_bar_height", "dimen","android");
+        int height = resources.getDimensionPixelSize(resourceId);
+        Log.i("layout_h",Integer.toString(height));
+        ViewGroup.LayoutParams params = app_bar.getLayoutParams();
+        ViewGroup.LayoutParams params_tb = toolbar.getLayoutParams();
+        Log.i("layout_h",Integer.toString(params_tb.height));
+        params.height = params_tb.height+height;
+        app_bar.setLayoutParams(params);
     }
 
     //上一頁intent

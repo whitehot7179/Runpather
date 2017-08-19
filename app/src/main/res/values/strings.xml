@@ -22,6 +22,7 @@
     <string name="page_reload">載入更新資訊</string>
     <string name="page_reload_finish">資訊已更新</string>
     <string name="miles_setting">輸入里程數</string>
+    <string name="nextStep_envir">開始路線規劃</string>
     <string name="nextStep">下一步</string>
     <string name="title_activity_main">MainActivity</string>
 
