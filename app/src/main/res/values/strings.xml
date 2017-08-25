@@ -21,7 +21,10 @@
     <string name="envir_info">環境資訊</string>
     <string name="page_reload">載入更新資訊</string>
     <string name="page_reload_finish">資訊已更新</string>
-    <string name="miles_setting">輸入里程數</string>
+    <string name="rp_mile_title">輸入里程數</string>
+    <string name="rp_mode_title">選擇情境模式</string>
+    <string name="rp_pathoverview_title">選擇路跑路線</string>
+    <string name="rp_pathcheck_title">確認路跑路線</string>
     <string name="nextStep_envir">開始路線規劃</string>
     <string name="nextStep">下一步</string>
     <string name="title_activity_main">MainActivity</string>
@@ -120,5 +123,8 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
