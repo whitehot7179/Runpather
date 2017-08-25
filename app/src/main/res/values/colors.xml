@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimaryDark2">#007ea7</color>
     <color name="colorPrimaryDark">#0097a7</color>
     <color name="colorPrimary">#00bbd2</color>
     <color name="colorAccent">#fb705e</color>
@@ -11,6 +12,7 @@
     <color name="colorBlackDark">#292929</color>
     <color name="colorBlack">#404040</color>
     <color name="colorGray">#777777</color>
+    <color name="colorGrayLight">#dbdbdb</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorYellow">#ffea25</color>
     <color name="colorFacebookBlue">#4267b2</color>

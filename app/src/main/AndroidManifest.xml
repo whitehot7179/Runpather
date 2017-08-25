@@ -25,7 +25,7 @@
             android:label=""
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".RunMileActivity"
+            android:name=".RunPlanningActivity"
             android:label=""
             android:theme="@style/AppTheme"
             />
