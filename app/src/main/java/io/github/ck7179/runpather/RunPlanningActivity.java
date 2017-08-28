@@ -103,10 +103,14 @@ public class RunPlanningActivity extends AppCompatActivity {
                     }
                     break;
                 case 2:
-                    frag_pathoverview_do();
+                    if(frag_pathoverview_do()){
+                        nextFrag(currentFrag+1);//擷取完當頁資訊後即切換到下一個fragment
+                    }
                     break;
                 case 3:
-                    frag_pathcheck_do();
+                    if(frag_pathcheck_do()){
+                        nextFrag(currentFrag+1);//擷取完當頁資訊後即切換到下一個fragment
+                    }
                     break;
             }
 
@@ -189,12 +193,12 @@ public class RunPlanningActivity extends AppCompatActivity {
         }
     }
 
-    public void frag_pathoverview_do(){//第3頁資訊擷取
-
+    public boolean frag_pathoverview_do(){//第3頁資訊擷取
+        return true;
     }
 
-    public void frag_pathcheck_do(){//第4頁資訊擷取
-
+    public boolean frag_pathcheck_do(){//第4頁資訊擷取
+        return true;
     }
 
     //設定progressbar的進度
