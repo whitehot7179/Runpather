@@ -1,11 +1,19 @@
 package io.github.ck7179.runpather;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.NumberPicker;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import com.triggertrap.seekarc.SeekArc;
 
 public class RunPlanningMileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -13,10 +21,24 @@ public class RunPlanningMileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private SeekArc seekArc;
+    private TextView textview_seekbar_num ;
+    private int path_num = 0;//里程數
+    private int seekbar_num = 0;//進度條數字
+    private Button btn_kilometer;
+    private Button btn_meter;
+    private TextView textView_unit;
+    private TextView textView_alert;
+    private boolean btn_unit = false;//辨識目前單位為何，(false為公尺，true為公里)
     private static RunPlanningMileFragment instance;
 
-    public void findviews(View view){
-
+    private void findviews(View view){
+        seekArc = (SeekArc) view.findViewById(R.id.seekArc);
+        textview_seekbar_num = (TextView) view.findViewById(R.id.textView_seekbar_num);
+        btn_kilometer = (Button) view.findViewById(R.id.btn_kilometer);
+        btn_meter = (Button) view.findViewById(R.id.btn_meter);
+        textView_unit = (TextView) view.findViewById(R.id.textView_unit);
+        textView_alert = (TextView) view.findViewById(R.id.textView_alert);
     }
 
     public RunPlanningMileFragment() {
@@ -48,7 +70,146 @@ public class RunPlanningMileFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_run_planning_mile, container, false);
         findviews(view);
+        setSeekArc();
+        setBtn();
         return  view;
     }
 
+    @Override
+    public void onDestroy() {
+        path_num = 0;
+        seekbar_num = 0;
+        btn_unit = false;
+        super.onDestroy();
+    }
+
+    //里程數單位按鈕設定
+    private void setBtn(){
+        if(!btn_unit){//目前為公尺時
+            btn_meter.setTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimary));
+            btn_meter.setEnabled(false);//取消按鈕作用
+            textView_unit.setText("m");
+        }else{//目前為公里時
+            btn_kilometer.setTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimary));
+            btn_kilometer.setEnabled(false);
+            textView_unit.setText("km");
+        }
+
+        //公尺按鈕監聽
+        btn_meter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (btn_unit) {//目前為公里時
+                    btn_meter.setTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimary));
+                    btn_kilometer.setTextColor(ContextCompat.getColor(getContext(),R.color.colorTextBlack3));
+                    btn_meter.setEnabled(false);
+                    btn_kilometer.setEnabled(true);
+                    btn_unit = false;
+                    textView_unit.setText("m");
+                    setZeroSeekbar();
+                }
+            }
+        });
+        //公里按鈕監聽
+        btn_kilometer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!btn_unit) {//目前為公尺時
+                    btn_kilometer.setTextColor(ContextCompat.getColor(getContext(),R.color.colorPrimary));
+                    btn_meter.setTextColor(ContextCompat.getColor(getContext(),R.color.colorTextBlack3));
+                    btn_kilometer.setEnabled(false);
+                    btn_meter.setEnabled(true);
+                    btn_unit = true;
+                    textView_unit.setText("km");
+                    setZeroSeekbar();
+                }
+            }
+        });
+    }
+
+    //設定seekarc
+    private void setSeekArc(){
+        //===預設&更新===
+        textview_seekbar_num.setText(Integer.toString(path_num));
+        seekArc.setProgress(seekbar_num);
+        if((!btn_unit && path_num<=100) || (btn_unit && path_num==0)){//公尺且小於100或公里且等於0
+            showMileAlert(true);
+        }else{
+            showMileAlert(false);
+        }
+        //===預設&更新===
+        seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
+            @Override
+            public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
+                seekbar_num = i ;//擷取進度條目前刻度
+                if(!btn_unit){//目前為公尺時
+                    path_num = i * 10;//使最大值為1000
+                    if(path_num<=100){//判斷距離是否過短
+                        showMileAlert(true);
+                    }else{
+                        showMileAlert(false);
+                    }
+                }else{//目前為公里時
+                    float p1 = (float)i;
+                    float p2 = p1 * 42 / 100;//使最大值為42
+                    path_num = Math.round(p2);//Math.round:取浮點數的最接近整數
+                    if(path_num == 0){//判斷距離是否過短
+                        showMileAlert(true);
+                    }else {
+                        showMileAlert(false);
+                    }
+                }
+                textview_seekbar_num.setText(Integer.toString(path_num));//動態顯示里程數
+            }
+            @Override
+            public void onStartTrackingTouch(SeekArc seekArc) {
+            }
+            @Override
+            public void onStopTrackingTouch(SeekArc seekArc) {
+            }
+        });
+    }
+
+    //顯示里程數過短警告
+    private void showMileAlert(boolean a){
+        if(a){
+            seekArc.setProgressColor(ContextCompat.getColor(getContext(),R.color.colorAccent));//進度條變色
+            textview_seekbar_num.setTextColor(ContextCompat.getColor(getContext(),R.color.colorAccent));//里程數數字變色
+            textView_alert.setText(R.string.mile_alert);//進度條下方顯示警告訊息
+        }else{
+            seekArc.setProgressColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryLight));
+            textview_seekbar_num.setTextColor(ContextCompat.getColor(getContext(), R.color.colorTextBlack2));
+            textView_alert.setText("");
+        }
+    }
+
+    //進度條及里程數歸零
+    private void setZeroSeekbar(){
+        seekbar_num = 0;
+        path_num = 0;
+        seekArc.setProgress(seekbar_num);
+    }
+
+    //===API===
+    //取得目前里程數
+    public int getPath_num(){
+        return path_num;
+    }
+    //取得進度條目前刻度
+    public int getSeekbar_num(){
+        return  seekbar_num;
+    }
+    //取得目前單位
+    public boolean isBtn_unit(){
+        return btn_unit;
+    }
+    //取得是否能進入下一步
+    public boolean isNextEnabled(){
+        if((!btn_unit && path_num<=100) || (btn_unit && path_num==0)){//公尺且小於100或公里且等於0
+            return false;
+        }else{
+            return true;
+        }
+    }
+    //===API===
 }

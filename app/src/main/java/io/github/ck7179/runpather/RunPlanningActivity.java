@@ -93,10 +93,14 @@ public class RunPlanningActivity extends AppCompatActivity {
         if (currentFrag < Frag_list.length - 1){//確認尚未到達最後一頁fragment
             switch(currentFrag){//按下下一步按鈕後開始擷取當頁的資訊
                 case 0:
-                    frag_mile_do();
+                    if(frag_mile_do()){
+                        nextFrag(currentFrag+1);//擷取完當頁資訊後即切換到下一個fragment
+                    }
                     break;
                 case 1:
-                    frag_mode_do();
+                    if(frag_mode_do()){
+                        nextFrag(currentFrag+1);//擷取完當頁資訊後即切換到下一個fragment
+                    }
                     break;
                 case 2:
                     frag_pathoverview_do();
@@ -105,7 +109,7 @@ public class RunPlanningActivity extends AppCompatActivity {
                     frag_pathcheck_do();
                     break;
             }
-            nextFrag(currentFrag+1);//擷取完當頁資訊後即切換到下一個fragment
+
         }else{
             Toast.makeText(this,"已經到最後一頁", Toast.LENGTH_SHORT).show();
         }
@@ -143,12 +147,46 @@ public class RunPlanningActivity extends AppCompatActivity {
         setProgressBar(last_num+2,last_num+1);//更新progressbar進度
     }
 
-    public void frag_mile_do(){//第1頁資訊擷取
-
+    public boolean frag_mile_do(){//第1頁資訊擷取
+        if(!runPlanningMileFragment.isNextEnabled()){
+            Toast.makeText(this,"請選取適當的里程數", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            //取得資訊
+            String unit = "";
+            if(runPlanningMileFragment.isBtn_unit()){
+                unit = "公里";
+            }else{
+                unit = "公尺";
+            }
+            Toast.makeText(this,runPlanningMileFragment.getPath_num()+unit, Toast.LENGTH_SHORT).show();
+            return true;
+        }
     }
 
-    public void frag_mode_do(){//第2頁資訊擷取
-
+    public boolean frag_mode_do(){//第2頁資訊擷取
+        if(!runPlanningModeFragment.isNextEnabled()){
+            Toast.makeText(this,"請選取情境模式", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            //取得資訊
+            String mode ="";
+            switch(runPlanningModeFragment.getMode()){
+                case 1:
+                    mode = "安全優先";
+                    break;
+                case 2:
+                    mode = "寧靜優先";
+                    break;
+                case 3:
+                    mode = "健康優先";
+                    break;
+                case 4:
+                    mode = "景點優先";
+            }
+            Toast.makeText(this,mode, Toast.LENGTH_SHORT).show();
+            return true;
+        }
     }
 
     public void frag_pathoverview_do(){//第3頁資訊擷取
@@ -176,6 +214,7 @@ public class RunPlanningActivity extends AppCompatActivity {
         startActivity(intent);
         //設定activity頁面跳轉動畫(新頁面,現有頁面)
         overridePendingTransition(R.transition.slide_none, R.transition.slide_to_right);
+        RunPlanningActivity.this.finish();
     }
 
     //下一頁intent

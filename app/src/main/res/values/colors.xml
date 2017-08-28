@@ -3,9 +3,10 @@
     <color name="colorPrimaryDark2">#007ea7</color>
     <color name="colorPrimaryDark">#0097a7</color>
     <color name="colorPrimary">#00bbd2</color>
-    <color name="colorAccent">#fb705e</color>
+    <color name="colorPrimaryLight">#9ad1d4</color>
+    <color name="colorAccent">#ef346f</color>
     <color name="colorProfileBlue">#005662</color>
-    <color name="colorBase">#fafafa</color>
+    <color name="colorBase">#f8f8f8</color>
     <color name="colorborder">#2e000000</color>
     <color name="colorEnvirBlack">#1b1e21</color>
     <color name="colorNoColor">#00ffffff</color>
@@ -19,4 +20,6 @@
     <color name="colorGoogleRed">#dd4b39</color>
     <color name="colorTextBlack1">#c8000000</color>
     <color name="colorTextBlack2">#64000000</color>
+    <color name="colorTextBlack3">#4d000000</color>
+    <color name="colorTextBlack4">#9c000000</color>
 </resources>

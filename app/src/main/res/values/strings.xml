@@ -27,6 +27,17 @@
     <string name="rp_pathcheck_title">確認路跑路線</string>
     <string name="nextStep_envir">開始路線規劃</string>
     <string name="nextStep">下一步</string>
+    <string name="meter">公尺</string>
+    <string name="kilometer">公里</string>
+    <string name="mile_alert">里程距離過短!</string>
+    <string name="mode_title_safe">安全優先</string>
+    <string name="mode_info_safe">以較低犯罪率路段做優先考量</string>
+    <string name="mode_title_quiet">寧靜優先</string>
+    <string name="mode_info_quiet">以較低車流量及噪音路段做優先考量</string>
+    <string name="mode_title_health">健康優先</string>
+    <string name="mode_info_health">以較多公園綠地路段做優先考量</string>
+    <string name="mode_title_scene">景點優先</string>
+    <string name="mode_info_scene">以較多景點路段做優先考量</string>
     <string name="title_activity_main">MainActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

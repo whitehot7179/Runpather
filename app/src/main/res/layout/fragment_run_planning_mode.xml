@@ -1,15 +1,224 @@
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBase"
+    android:orientation="vertical"
+    android:padding="7dp"
     tools:context="io.github.ck7179.runpather.RunPlanningModeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite"
+        android:elevation="3dp"
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
-</android.support.constraint.ConstraintLayout>
+        <CheckBox
+            android:id="@+id/checkBox_safe"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:checked="false"
+            android:text="@string/mode_title_safe"
+            android:textColor="@color/colorTextBlack1"
+            android:textSize="18sp"
+            android:theme="@style/checkBoxStyle"
+            app:layout_constraintBottom_toTopOf="@+id/view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.894"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="304dp"
+            android:layout_height="2dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:background="#b0b0b0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.504"/>
+
+        <TextView
+            android:id="@+id/textView_safe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="34dp"
+            android:text="@string/mode_info_safe"
+            android:textColor="@color/colorTextBlack4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintVertical_bias="0.609"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite"
+        android:elevation="3dp"
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <CheckBox
+            android:id="@+id/checkBox_quiet"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:checked="false"
+            android:text="@string/mode_title_quiet"
+            android:textColor="@color/colorTextBlack1"
+            android:textSize="18sp"
+            android:theme="@style/checkBoxStyle"
+            app:layout_constraintBottom_toTopOf="@+id/view2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.894"/>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="304dp"
+            android:layout_height="2dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:background="#b0b0b0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.504"/>
+
+        <TextView
+            android:id="@+id/textView_quiet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="34dp"
+            android:text="@string/mode_info_quiet"
+            android:textColor="@color/colorTextBlack4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
+            app:layout_constraintVertical_bias="0.609"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite"
+        android:elevation="3dp"
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <CheckBox
+            android:id="@+id/checkBox_health"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:checked="false"
+            android:text="@string/mode_title_health"
+            android:textColor="@color/colorTextBlack1"
+            android:textSize="18sp"
+            android:theme="@style/checkBoxStyle"
+            app:layout_constraintBottom_toTopOf="@+id/view3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.894"/>
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="304dp"
+            android:layout_height="2dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:background="#b0b0b0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.504"/>
+
+        <TextView
+            android:id="@+id/textView_health"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="34dp"
+            android:text="@string/mode_info_health"
+            android:textColor="@color/colorTextBlack4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view3"
+            app:layout_constraintVertical_bias="0.609"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite"
+        android:elevation="3dp"
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <CheckBox
+            android:id="@+id/checkBox_scene"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:checked="false"
+            android:text="@string/mode_title_scene"
+            android:textColor="@color/colorTextBlack1"
+            android:textSize="18sp"
+            android:theme="@style/checkBoxStyle"
+            app:layout_constraintBottom_toTopOf="@+id/view4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.894"/>
+
+        <View
+            android:id="@+id/view4"
+            android:layout_width="304dp"
+            android:layout_height="2dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:background="#b0b0b0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.504"/>
+
+        <TextView
+            android:id="@+id/textView_scene"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="34dp"
+            android:text="@string/mode_info_scene"
+            android:textColor="@color/colorTextBlack4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view4"
+            app:layout_constraintVertical_bias="0.609"/>
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>
