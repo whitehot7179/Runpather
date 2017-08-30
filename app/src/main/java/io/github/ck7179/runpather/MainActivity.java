@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity
         thisActivity = this;
         findViews();//抓取view
 
+        //設置toolbar不顯示預設title
+        toolbar.setTitle("");
         //設定以toolbar支援actionbar
         setSupportActionBar(toolbar);
 
@@ -394,6 +396,13 @@ public class MainActivity extends AppCompatActivity
         }
         @Override
         public void onPageFinished(WebView w,String url){
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            view.loadUrl("file:///android_asset/loadError.html");
+            //super.onReceivedError(view, errorCode, description, failingUrl);
+            //Log.i("webb","errorCode"+errorCode+"/"+"description"+description);
         }
     }
 

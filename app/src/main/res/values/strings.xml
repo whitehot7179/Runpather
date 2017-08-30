@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Runpather</string>
+    <string name="app_name_run">Runpather</string>
     <string name="JoinUs">Join Us!</string>
     <string name="JoinUs_Info">現在即刻加入我們</string>
     <string name="GoogleLogin">Google Login</string>

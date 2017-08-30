@@ -113,7 +113,6 @@ public class RunPlanningActivity extends AppCompatActivity {
                     }
                     break;
             }
-
         }else{
             Toast.makeText(this,"已經到最後一頁", Toast.LENGTH_SHORT).show();
         }
