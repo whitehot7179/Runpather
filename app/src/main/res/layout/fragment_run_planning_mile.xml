@@ -44,6 +44,7 @@
         app:sweepAngle="360"
         app:touchInside="true"
         app:arcWidth="5dp"
+        app:progress="12"
         app:progressColor="@color/colorPrimaryLight"
         />
 

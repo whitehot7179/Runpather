@@ -10,6 +10,7 @@
     tools:context="io.github.ck7179.runpather.RunPlanningModeFragment">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/mode_layout_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -39,10 +40,10 @@
         <View
             android:id="@+id/view"
             android:layout_width="304dp"
-            android:layout_height="2dp"
+            android:layout_height="1.5dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
-            android:background="#b0b0b0"
+            android:background="#cfcfcf"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -64,6 +65,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/mode_layout_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -93,10 +95,10 @@
         <View
             android:id="@+id/view2"
             android:layout_width="304dp"
-            android:layout_height="2dp"
+            android:layout_height="1.6dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
-            android:background="#b0b0b0"
+            android:background="#cfcfcf"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -117,6 +119,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/mode_layout_3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -146,10 +149,10 @@
         <View
             android:id="@+id/view3"
             android:layout_width="304dp"
-            android:layout_height="2dp"
+            android:layout_height="1.6dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
-            android:background="#b0b0b0"
+            android:background="#cfcfcf"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -170,6 +173,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/mode_layout_4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
@@ -199,10 +203,10 @@
         <View
             android:id="@+id/view4"
             android:layout_width="304dp"
-            android:layout_height="2dp"
+            android:layout_height="1.6dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"
-            android:background="#b0b0b0"
+            android:background="#cfcfcf"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

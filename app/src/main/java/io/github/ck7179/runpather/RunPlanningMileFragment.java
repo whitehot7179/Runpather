@@ -3,13 +3,18 @@ package io.github.ck7179.runpather;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -23,7 +28,7 @@ public class RunPlanningMileFragment extends Fragment {
 
     private SeekArc seekArc;
     private TextView textview_seekbar_num ;
-    private int path_num = 0;//里程數
+    private int path_num = 110;//里程數
     private int seekbar_num = 0;//進度條數字
     private Button btn_kilometer;
     private Button btn_meter;
@@ -106,7 +111,11 @@ public class RunPlanningMileFragment extends Fragment {
                     btn_kilometer.setEnabled(true);
                     btn_unit = false;
                     textView_unit.setText("m");
-                    setZeroSeekbar();
+                    //setZeroSeekbar();
+                    //動畫
+                    SeekArcAnimation am = new SeekArcAnimation(seekArc,11,100);
+                    am.setDuration(800);//動畫速度
+                    seekArc.startAnimation(am);
                 }
             }
         });
@@ -121,7 +130,11 @@ public class RunPlanningMileFragment extends Fragment {
                     btn_meter.setEnabled(true);
                     btn_unit = true;
                     textView_unit.setText("km");
-                    setZeroSeekbar();
+                    //setZeroSeekbar();
+                    //動畫
+                    SeekArcAnimation am = new SeekArcAnimation(seekArc,2,100);
+                    am.setDuration(800);//動畫速度
+                    seekArc.startAnimation(am);
                 }
             }
         });
@@ -131,13 +144,10 @@ public class RunPlanningMileFragment extends Fragment {
     private void setSeekArc(){
         //===預設&更新===
         textview_seekbar_num.setText(Integer.toString(path_num));
-        seekArc.setProgress(seekbar_num);
-        if((!btn_unit && path_num<=100) || (btn_unit && path_num==0)){//公尺且小於100或公里且等於0
-            showMileAlert(true);
-        }else{
-            showMileAlert(false);
-        }
+        setInitSeekArcAnim();
         //===預設&更新===
+
+        //seekarc數值監聽
         seekArc.setOnSeekArcChangeListener(new SeekArc.OnSeekArcChangeListener() {
             @Override
             public void onProgressChanged(SeekArc seekArc, int i, boolean b) {
@@ -168,6 +178,78 @@ public class RunPlanningMileFragment extends Fragment {
             public void onStopTrackingTouch(SeekArc seekArc) {
             }
         });
+    }
+
+    //設定初始載入時的seekarc動畫顯示
+    public void setInitSeekArcAnim(){
+        if(seekbar_num!=0){//已有紀錄
+            if(!btn_unit) {//目前為公尺
+                if(seekbar_num-11 >= 5) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            //動畫
+                            SeekArcAnimation am = new SeekArcAnimation(seekArc, 11, seekbar_num);
+                            am.setDuration(Math.round(500 + 300 * ((double) seekbar_num / 100)));//動畫速度
+                            seekArc.startAnimation(am);
+                        }
+                    }, 300);//動畫延遲
+                }else{//數值過低則不進行動畫
+                    seekArc.setProgress(seekbar_num);
+                }
+            }else{//目前為公里
+                if(seekbar_num-2 >= 12) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            //動畫
+                            SeekArcAnimation am = new SeekArcAnimation(seekArc,2,seekbar_num);
+                            am.setDuration(Math.round(500+300*((double)seekbar_num/100)));//動畫速度
+                            seekArc.startAnimation(am);
+                        }
+                    }, 300);//動畫延遲
+                }else{//數值過低則不進行動畫
+                    seekArc.setProgress(seekbar_num);
+                }
+            }
+
+        }else{//初次載入
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    //動畫
+                    SeekArcAnimation am = new SeekArcAnimation(seekArc,11,100);
+                    am.setDuration(800);//動畫速度
+                    seekArc.startAnimation(am);
+                }
+            }, 200);//動畫延遲
+        }
+    }
+
+    //seekArc的動態進度設置
+    public class SeekArcAnimation extends Animation {
+        private SeekArc seekArc;
+        private float from;
+        private float  to;
+
+        public SeekArcAnimation(SeekArc seekArc, float from, float to) {
+            super();
+            this.seekArc = seekArc;
+            this.from = from;
+            this.to = to;
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            super.applyTransformation(interpolatedTime, t);
+            float value = from + (to - from) * interpolatedTime;
+            Log.i("seekk",Float.toString(value));
+            seekArc.setProgress((int) value);
+            if(value == 100.0){//最後做歸零
+                seekArc.setProgress(0);
+            }
+        }
+
     }
 
     //顯示里程數過短警告

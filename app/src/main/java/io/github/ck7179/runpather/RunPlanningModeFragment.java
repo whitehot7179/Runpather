@@ -2,11 +2,15 @@ package io.github.ck7179.runpather;
 
 
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
@@ -21,6 +25,11 @@ public class RunPlanningModeFragment extends Fragment {
     private CheckBox checkbox_health;
     private CheckBox checkbox_scene;
     private CheckBox checkbox_list[];
+    private ConstraintLayout mode_layout_1;
+    private ConstraintLayout mode_layout_2;
+    private ConstraintLayout mode_layout_3;
+    private ConstraintLayout mode_layout_4;
+    private ConstraintLayout mode_layout[];
     private int mode = 0;
     private boolean needZero;//判斷是否需在第一次checkbox打勾的時候將checkbox取消打勾
     private static RunPlanningModeFragment instance;
@@ -30,6 +39,10 @@ public class RunPlanningModeFragment extends Fragment {
         checkbox_quiet = (CheckBox) view.findViewById(R.id.checkBox_quiet);
         checkbox_health = (CheckBox) view.findViewById(R.id.checkBox_health);
         checkbox_scene = (CheckBox) view.findViewById(R.id.checkBox_scene);
+        mode_layout_1 = (ConstraintLayout) view.findViewById(R.id.mode_layout_1);
+        mode_layout_2 = (ConstraintLayout) view.findViewById(R.id.mode_layout_2);
+        mode_layout_3 = (ConstraintLayout) view.findViewById(R.id.mode_layout_3);
+        mode_layout_4 = (ConstraintLayout) view.findViewById(R.id.mode_layout_4);
     }
 
     public RunPlanningModeFragment() {
@@ -61,6 +74,7 @@ public class RunPlanningModeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_run_planning_mode, container, false);
         findviews(view);
+        setLayout(view);
         setCheckBox();
         return  view;
     }
@@ -116,6 +130,29 @@ public class RunPlanningModeFragment extends Fragment {
                 }
             }
         });
+    }
+
+    //設定layout
+    private void setLayout(View view) {
+        mode_layout = new ConstraintLayout[]{mode_layout_1,mode_layout_2,mode_layout_3,mode_layout_4};
+        if(mode == 0){//初次載入
+            for(int i=1;i<=4;i++){
+                //動畫
+                Animation am = AnimationUtils.loadAnimation(this.getContext(),R.anim.slide_from_right);
+                am.setDuration(200+100*i);
+                mode_layout[i-1].setAnimation(am);
+                am.startNow();
+            }
+        }else{//上一步載入
+            for(int i=1;i<=4;i++){
+                //動畫
+                Animation am = AnimationUtils.loadAnimation(this.getContext(),R.anim.slide_from_left);
+                am.setDuration(300+100*i);
+                mode_layout[i-1].setAnimation(am);
+                am.startNow();
+            }
+        }
+
     }
 
     //===API===
