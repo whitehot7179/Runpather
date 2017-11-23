@@ -141,7 +141,11 @@ public class RunPlanningActivity extends AppCompatActivity {
         trans.commit();
         currentFrag = next_num;//更新目前頁數
         toolbar_title.setText(Frag_title_list[next_num]);//切換title
-        setProgressBar(next_num,next_num+1);//更新progressbar進度
+        if(next_num == 4){
+            setProgressBar(next_num-1,next_num);//更新progressbar進度
+        }else{
+            setProgressBar(next_num,next_num+1);//更新progressbar進度
+        }
     }
 
     //預設的第一個frag
