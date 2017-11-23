@@ -1,6 +1,7 @@
 package io.github.ck7179.runpather;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -25,11 +26,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.triggertrap.seekarc.SeekArc;
+
+import static io.github.ck7179.runpather.R.id.progressBar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -40,6 +48,9 @@ public class MainActivity extends AppCompatActivity
     private DrawerLayout drawer;
     private NavigationView navigationView;
     private TextView toolbar_title;
+    private static ProgressBar pg1;
+    private static ProgressBar pg2;
+    private static ProgressBar pg3;
     static Activity thisActivity = null;
     //抓取view函式
     private void findViews() {
@@ -110,6 +121,7 @@ public class MainActivity extends AppCompatActivity
                 switch (position+1) {
                     case 1:
                         fab.show();
+                        setFrag_overall();
                         break;
                     case 2:
                         fab.hide();
@@ -227,7 +239,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.menu_route_fav) {
-            // Handle the camera action
+            //
         } else if (id == R.id.menu_route_share) {
 
         } else if (id == R.id.menu_voice_setting) {
@@ -235,7 +247,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.menu_screen_setting) {
             return false;//取消點擊
         } else if (id == R.id.menu_account_signout) {
-
+            Toast.makeText(this,"測試模式請勿登出!",Toast.LENGTH_SHORT).show();
+            return false;//取消點擊
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -311,8 +324,25 @@ public class MainActivity extends AppCompatActivity
 
     //第1頁fragment內容設定
     public static void setFrag_overall(View rootView){
-        TextView tx = (TextView)rootView.findViewById(R.id.section_label);
-        tx.setText(R.string.large_text);
+        //TextView tx = (TextView)rootView.findViewById(R.id.section_label);
+        //tx.setText(R.string.large_text);
+        pg1 = (ProgressBar)rootView.findViewById(R.id.progressBar1);
+        pg2 = (ProgressBar)rootView.findViewById(R.id.progressBar2);
+        pg3 = (ProgressBar)rootView.findViewById(R.id.progressBar3);
+        pg1.setProgress(20);
+        setProgressBar(pg1,0,20);
+        pg2.setProgress(80);
+        setProgressBar(pg2,0,80);
+        pg3.setProgress(50);
+        setProgressBar(pg3,0,50);
+    }
+    public static void setFrag_overall(){
+        if(pg1!=null&&pg2!=null&&pg3!=null){
+            setProgressBar(pg1,0,20);
+            setProgressBar(pg2,0,80);
+            setProgressBar(pg3,0,50);
+        }
+
     }
 
     //第2頁fragment內容設定
@@ -406,6 +436,35 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    //設定progressbar的進度
+    public static void setProgressBar(ProgressBar progressBar,int from,int to){
+        //XML中設定最大值為100，這裡切5等分，每等分為20
+        MainActivity.ProgressBarAnimation anim = new MainActivity.ProgressBarAnimation(progressBar, from, to);
+        anim.setDuration(1500);//動畫速度
+        progressBar.startAnimation(anim);
+    }
+
+    //progressbar的動態進度設置
+    public static class ProgressBarAnimation extends Animation {
+        private ProgressBar progressBar;
+        private float from;
+        private float  to;
+
+        public ProgressBarAnimation(ProgressBar progressBar, float from, float to) {
+            super();
+            this.progressBar = progressBar;
+            this.from = from;
+            this.to = to;
+        }
+
+        @Override
+        protected void applyTransformation(float interpolatedTime, Transformation t) {
+            super.applyTransformation(interpolatedTime, t);
+            float value = from + (to - from) * interpolatedTime;
+            progressBar.setProgress((int) value);
+        }
+
+    }
     //intent 設定往下一頁
     public void nextpage(){
         Intent intent = new Intent(this,RunEnvirActivity.class);
@@ -424,5 +483,11 @@ public class MainActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setFrag_overall();
     }
 }
