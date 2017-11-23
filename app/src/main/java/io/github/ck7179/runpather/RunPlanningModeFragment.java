@@ -155,7 +155,7 @@ public class RunPlanningModeFragment extends Fragment {
 
     }
 
-    //===API===
+    //===API(由 RunPlanningActivity call)===
     public int getMode(){
         return mode;
     }

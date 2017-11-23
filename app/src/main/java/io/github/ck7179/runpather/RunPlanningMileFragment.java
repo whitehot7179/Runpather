@@ -113,8 +113,8 @@ public class RunPlanningMileFragment extends Fragment {
                     textView_unit.setText("m");
                     //setZeroSeekbar();
                     //動畫
-                    SeekArcAnimation am = new SeekArcAnimation(seekArc,11,100);
-                    am.setDuration(800);//動畫速度
+                    SeekArcAnimation am = new SeekArcAnimation(seekArc,0,11);
+                    am.setDuration(600);//動畫速度
                     seekArc.startAnimation(am);
                 }
             }
@@ -132,8 +132,8 @@ public class RunPlanningMileFragment extends Fragment {
                     textView_unit.setText("km");
                     //setZeroSeekbar();
                     //動畫
-                    SeekArcAnimation am = new SeekArcAnimation(seekArc,2,100);
-                    am.setDuration(800);//動畫速度
+                    SeekArcAnimation am = new SeekArcAnimation(seekArc,0,2);
+                    am.setDuration(200);//動畫速度
                     seekArc.startAnimation(am);
                 }
             }
@@ -193,7 +193,7 @@ public class RunPlanningMileFragment extends Fragment {
                             am.setDuration(Math.round(500 + 300 * ((double) seekbar_num / 100)));//動畫速度
                             seekArc.startAnimation(am);
                         }
-                    }, 300);//動畫延遲
+                    }, 200);//動畫延遲
                 }else{//數值過低則不進行動畫
                     seekArc.setProgress(seekbar_num);
                 }
@@ -218,11 +218,11 @@ public class RunPlanningMileFragment extends Fragment {
             handler.postDelayed(new Runnable() {
                 public void run() {
                     //動畫
-                    SeekArcAnimation am = new SeekArcAnimation(seekArc,11,100);
-                    am.setDuration(800);//動畫速度
+                    SeekArcAnimation am = new SeekArcAnimation(seekArc,0,11);
+                    am.setDuration(600);//動畫速度
                     seekArc.startAnimation(am);
                 }
-            }, 200);//動畫延遲
+            }, 300);//動畫延遲
         }
     }
 

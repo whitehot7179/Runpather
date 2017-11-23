@@ -1,13 +1,146 @@
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBase"
+    android:orientation="vertical"
+    android:padding="7dp"
     tools:context="io.github.ck7179.runpather.RunPlanningPathoverviewFragment">
-    <TextView
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite"
+        android:elevation="3dp"
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
 
-</android.support.constraint.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/hand"
+            android:adjustViewBounds="true"
+            android:maxWidth="140dp"
+            android:maxHeight="140dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintVertical_bias="0.504"
+            app:layout_constraintBottom_toTopOf="@+id/view"/>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="304dp"
+            android:layout_height="1.5dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="120dp"
+            android:background="#cfcfcf"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.504"/>
+
+        <TextView
+            android:id="@+id/textView_hand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="透過手指點按地圖的方式，手動繪製出路線。"
+            android:textColor="@color/colorTextBlack4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintVertical_bias="0.68"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite"
+        android:elevation="3dp"
+        android:padding="10dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/auto"
+            android:adjustViewBounds="true"
+            android:maxWidth="140dp"
+            android:maxHeight="140dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintVertical_bias="0.504"
+            app:layout_constraintBottom_toTopOf="@+id/view2"/>
+        <!--<CheckBox-->
+            <!--android:id="@+id/checkBox_auto"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_marginLeft="0dp"-->
+            <!--android:layout_marginTop="0dp"-->
+            <!--android:checked="false"-->
+            <!--android:text="自動規劃"-->
+            <!--android:textColor="@color/colorTextBlack1"-->
+            <!--android:textSize="18sp"-->
+            <!--android:theme="@style/checkBoxStyle"-->
+            <!--app:layout_constraintBottom_toTopOf="@+id/view2"-->
+            <!--app:layout_constraintLeft_toLeftOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent"-->
+            <!--app:layout_constraintVertical_bias="0.894"/>-->
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="304dp"
+            android:layout_height="1.5dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="120dp"
+            android:background="#cfcfcf"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.502"/>
+
+        <TextView
+            android:id="@+id/textView_auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="0dp"
+            android:text="由我們為您分析資訊，自動繪製出路線。"
+            android:textColor="@color/colorTextBlack4"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
+            app:layout_constraintVertical_bias="0.609"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>

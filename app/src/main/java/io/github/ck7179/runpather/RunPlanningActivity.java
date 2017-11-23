@@ -193,7 +193,23 @@ public class RunPlanningActivity extends AppCompatActivity {
     }
 
     public boolean frag_pathoverview_do(){//第3頁資訊擷取
-        return true;
+        if(!runPlanningPathoverviewFragment.isNextEnabled()){
+            Toast.makeText(this,"請選取路線規劃模式", Toast.LENGTH_SHORT).show();
+            return false;
+        }else{
+            //取得資訊
+            String mode ="";
+            switch(runPlanningPathoverviewFragment.getMode()){
+                case 1:
+                    mode = "手動規劃";
+                    break;
+                case 2:
+                    mode = "自動規劃";
+                    break;
+            }
+            Toast.makeText(this,mode, Toast.LENGTH_SHORT).show();
+            return true;
+        }
     }
 
     public boolean frag_pathcheck_do(){//第4頁資訊擷取
