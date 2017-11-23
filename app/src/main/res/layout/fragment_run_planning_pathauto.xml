@@ -6,5 +6,5 @@
     android:background="@color/colorBase"
     android:orientation="vertical"
     android:padding="7dp"
-    tools:context="io.github.ck7179.runpather.RunPlanningPathcheckFragment">
+    tools:context="io.github.ck7179.runpather.RunPlanningPathAutoFragment">
 </LinearLayout>

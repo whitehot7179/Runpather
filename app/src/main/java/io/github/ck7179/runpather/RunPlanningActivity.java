@@ -1,17 +1,13 @@
 package io.github.ck7179.runpather;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.Button;
@@ -29,10 +25,12 @@ public class RunPlanningActivity extends AppCompatActivity {
     private RunPlanningMileFragment runPlanningMileFragment;
     private RunPlanningModeFragment runPlanningModeFragment;
     private RunPlanningPathoverviewFragment runPlanningPathoverviewFragment;
-    private RunPlanningPathcheckFragment runPlanningPathcheckFragment;
+    private RunPlanningPathHandFragment runPlanningPathHandFragment;
+    private RunPlanningPathAutoFragment runPlanningPathAutoFragment;
     public Fragment Frag_list[];
     public String Frag_title_list[];
     public int currentFrag = 0;
+    private int planning_mode = 0;
 
     private void findViews() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -72,9 +70,10 @@ public class RunPlanningActivity extends AppCompatActivity {
         runPlanningMileFragment = RunPlanningMileFragment.newInstance("a","b");
         runPlanningModeFragment = RunPlanningModeFragment.newInstance("a","b");
         runPlanningPathoverviewFragment = RunPlanningPathoverviewFragment.newInstance("a","b");
-        runPlanningPathcheckFragment = RunPlanningPathcheckFragment.newInstance("a","b");
-        Frag_list = new Fragment[]{runPlanningMileFragment,runPlanningModeFragment,runPlanningPathoverviewFragment,runPlanningPathcheckFragment};
-        Frag_title_list = new String[]{getString(R.string.rp_mile_title),getString(R.string.rp_mode_title),getString(R.string.rp_pathoverview_title),getString(R.string.rp_pathcheck_title)};
+        runPlanningPathHandFragment = RunPlanningPathHandFragment.newInstance("a","b");
+        runPlanningPathAutoFragment = RunPlanningPathAutoFragment.newInstance("a","b");
+        Frag_list = new Fragment[]{runPlanningMileFragment,runPlanningModeFragment,runPlanningPathoverviewFragment,runPlanningPathHandFragment,runPlanningPathAutoFragment};
+        Frag_title_list = new String[]{getString(R.string.rp_mile_title),getString(R.string.rp_mode_title),getString(R.string.rp_pathoverview_title),getString(R.string.rp_pathhand_title),getString(R.string.rp_pathauto_title)};
         defaultFrag();
     }
 
@@ -90,7 +89,7 @@ public class RunPlanningActivity extends AppCompatActivity {
 
     //button控制
     public void btn_controler() {
-        if (currentFrag < Frag_list.length - 1){//確認尚未到達最後一頁fragment
+        if (currentFrag < Frag_list.length - 2){//確認尚未到達最後一頁fragment
             switch(currentFrag){//按下下一步按鈕後開始擷取當頁的資訊
                 case 0:
                     if(frag_mile_do()){
@@ -104,14 +103,22 @@ public class RunPlanningActivity extends AppCompatActivity {
                     break;
                 case 2:
                     if(frag_pathoverview_do()){
-                        nextFrag(currentFrag+1);//擷取完當頁資訊後即切換到下一個fragment
+                        if(planning_mode == 1){//手動模式
+                            nextFrag(currentFrag+1);//擷取完當頁資訊後即切換到下一個fragment
+                        }else{//自動模式
+                            nextFrag(currentFrag+2);//擷取完當頁資訊後即切換到下一個fragment
+                        }
                     }
                     break;
                 case 3:
-                    if(frag_pathcheck_do()){
+                    if(frag_pathhand_do()){
                         nextFrag(currentFrag+1);//擷取完當頁資訊後即切換到下一個fragment
                     }
                     break;
+                case 4:
+                    if(frag_pathauto_do()){
+                        nextFrag(currentFrag+1);//擷取完當頁資訊後即切換到下一個fragment
+                    }
             }
         }else{
             Toast.makeText(this,"已經到最後一頁", Toast.LENGTH_SHORT).show();
@@ -126,7 +133,11 @@ public class RunPlanningActivity extends AppCompatActivity {
         //以新的fragment替換現有的fragment
         trans.replace(R.id.fragment_container,Frag_list[next_num]);
         //將現有的fragment存入stack
-        trans.addToBackStack(Integer.toString(next_num-1));
+        if(next_num == 4){
+            trans.addToBackStack(Integer.toString(next_num-2));
+        }else{
+            trans.addToBackStack(Integer.toString(next_num-1));
+        }
         trans.commit();
         currentFrag = next_num;//更新目前頁數
         toolbar_title.setText(Frag_title_list[next_num]);//切換title
@@ -201,9 +212,11 @@ public class RunPlanningActivity extends AppCompatActivity {
             String mode ="";
             switch(runPlanningPathoverviewFragment.getMode()){
                 case 1:
+                    planning_mode = 1;
                     mode = "手動規劃";
                     break;
                 case 2:
+                    planning_mode = 2;
                     mode = "自動規劃";
                     break;
             }
@@ -212,7 +225,11 @@ public class RunPlanningActivity extends AppCompatActivity {
         }
     }
 
-    public boolean frag_pathcheck_do(){//第4頁資訊擷取
+    public boolean frag_pathhand_do(){//第4頁資訊擷取
+        return true;
+    }
+
+    public boolean frag_pathauto_do(){//第5頁資訊擷取
         return true;
     }
 
@@ -248,7 +265,11 @@ public class RunPlanningActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if(currentFrag != 0){//非第一頁
-            lastFrag(currentFrag-1);
+            if(currentFrag == 4){
+                lastFrag(currentFrag-2);
+            }else{
+                lastFrag(currentFrag-1);
+            }
         }else {//第一頁
             //以lastpage()處理使動畫一致
             lastpage();

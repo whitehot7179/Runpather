@@ -24,7 +24,8 @@
     <string name="rp_mile_title">輸入里程數</string>
     <string name="rp_mode_title">選擇情境模式</string>
     <string name="rp_pathoverview_title">選擇路線規劃模式</string>
-    <string name="rp_pathcheck_title">進行路線規劃</string>
+    <string name="rp_pathhand_title">手動路線規劃</string>
+    <string name="rp_pathauto_title">自動路線規劃</string>
     <string name="nextStep_envir">開始路線規劃</string>
     <string name="nextStep">下一步</string>
     <string name="meter">公尺</string>

@@ -7,25 +7,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class RunPlanningPathcheckFragment extends Fragment {
+public class RunPlanningPathHandFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
 
-    private static RunPlanningPathcheckFragment instance;
+    private static RunPlanningPathHandFragment instance;
 
     public void findviews(View view){
 
     }
 
-    public RunPlanningPathcheckFragment() {
+    public RunPlanningPathHandFragment() {
     }
 
-    public static RunPlanningPathcheckFragment newInstance(String param1, String param2) {
+    public static RunPlanningPathHandFragment newInstance(String param1, String param2) {
         //避免重複呼叫
         if(instance == null){
-            instance = new RunPlanningPathcheckFragment();
+            instance = new RunPlanningPathHandFragment();
         }
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -46,7 +46,7 @@ public class RunPlanningPathcheckFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_run_planning_pathcheck, container, false);
+        View view = inflater.inflate(R.layout.fragment_run_planning_pathhand, container, false);
         findviews(view);
         return  view;
     }
